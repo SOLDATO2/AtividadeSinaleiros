@@ -62,14 +62,14 @@ public class BufferMaterial{
         public void run(){
 
             try{
-                for(int i = 0; i < 3; i++){
-                //while(true){
+                //for(int i = 0; i < 3; i++){
+                while(true){
                     int item = 10;
                     bufferMaterial.abastecer(item, id);
-                    Thread.sleep(500);
+                    Thread.sleep(500); // materiais gerados depois de um tempo
                 //}
                 }
-                System.out.println("Abastecedor " + id + "fechou !");
+                //System.out.println("Abastecedor " + id + "fechou !");
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
             }

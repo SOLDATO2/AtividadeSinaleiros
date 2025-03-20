@@ -23,7 +23,7 @@ public class ProdutorConsumidorSemaforos {
         BufferMaterial bufferMaterial = new BufferMaterial(3);
 
         Vector <Thread> threads_abastecedores = new Vector<Thread>();
-        for(int i = 0; i < 4; i++){
+        for(int i = 0; i < 2; i++){
             threads_abastecedores.add(new Thread(new Abastecedor(bufferMaterial, i)));
         }
         Vector <Thread> threads_produtores = new Vector<Thread>();
@@ -55,7 +55,7 @@ public class ProdutorConsumidorSemaforos {
         try{
             //produtor.join();
             //consumidor.join(); // join garante que thread finalizou  
-            
+            // tecnicamente eles nunca irão finalizar pois as threads ficam em loop infinito no metodo run
             for (Thread thread : threads_produtores){
                 thread.join();
             }

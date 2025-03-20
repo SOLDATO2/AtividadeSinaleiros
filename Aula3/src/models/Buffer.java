@@ -24,6 +24,7 @@ public class Buffer { // buffer é a esteira que quero acessar
 
         buffer[index] = item;
         System.err.println("Produtor - Thread " + id + " Produzido: " + item);
+        
         index++;
 
         mutex.release(); // incrementa o semaforo mutex
@@ -59,19 +60,29 @@ public class Buffer { // buffer é a esteira que quero acessar
 
         @Override
         public void run() {
-            try{
-                //for(int i = 0; i < 10; i++){
-                while(true){
-                    int item = random.nextInt(100);
-                    bufferMaterial.coletarMaterial(id);
-                    buffer.produzir(item,id);
+            try {
+                int custoProducao = 10;
+                while (true) {
+
+                    int materialObtido = bufferMaterial.coletarMaterial(id);
+                    this.material += materialObtido;
+                    System.err.println("Produtor - Thread " + id + " acumulou material: " + this.material);
+
+                    if (this.material >= custoProducao) {
+                        this.material -= custoProducao;
+                        int item = random.nextInt(100);
+                        buffer.produzir(item, id);
+                        System.err.println("Produtor - Thread " + id + " produziu item: " + item + " (material restante: " + this.material + ")");
+                    } else {
+                        System.err.println("Produtor - Thread " + id + " não possui material suficiente para produzir");
+                    }
                     Thread.sleep(random.nextInt(500));
-                //}
                 }
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
             }
         }
+
     }
 
     public static class Consumidor implements Runnable{
